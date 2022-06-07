@@ -36,3 +36,91 @@ body {
   cursor: pointer;
   font-weight: bold;
 }
+
+/* createDocument */
+
+.createDocument {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.uploadDocument {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 500px;
+  font-size: 20px;
+}
+
+.uploadDocument input {
+  margin: 10px;
+  width: 95%;
+  height: 50px;
+}
+
+.uploadDocument label {
+  padding-left: 10px;
+  background-color: #b9b8b8;
+}
+
+textarea {
+  margin: 10px;
+  width: 95%;
+  height: 400px;
+}
+
+button {
+  margin: 10px;
+}
+
+/* document page */
+
+.showDocument {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.documentContainer {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 50%;
+  background-color: #b9b8b8;
+}
+
+/* documentList page */
+
+.showDocuments {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.docContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 50%;
+  background-color: #b9b8b8;
+}
+
+.documents {
+  width: 100%;
+  margin: 50px;
+  height: 120px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+}
