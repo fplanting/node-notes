@@ -1,48 +1,91 @@
 var express = require("express");
 var router = express.Router();
 const db = require("../config/db");
-const cors = require("cors");
 
+const cors = require("cors");
 router.use(cors());
 
 //get documents
+
 router.get("/", function (req, res) {
-  db.query("SELECT * FROM documents", (err, result) => {
+  db.connect(function (err) {
     if (err) {
       console.log(err);
     }
-    res.send(result);
+    const sql = `SELECT * FROM documents`;
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("result", result);
+      res.send(result);
+    });
   });
+});
+
+// create a document
+
+router.post("/create", function (req, res, next) {
+  db.connect(function (err) {
+    if (err) {
+      console.log(err);
+    }
+    const title = req.body.title;
+    const date = req.body.date;
+    const content = req.body.content;
+    const sql = `INSERT INTO documents (title, content, date) VALUES (?,?,?)`;
+    db.query(sql, [title, content, date], (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("result", result);
+    });
+  });
+  res.json({ message: "sucess" });
 });
 
 //get just one document
 router.get("/:id", function (req, res) {
   const id = req.params.id;
-  db.query("SELECT * FROM documents WHERE id = ?", id, (err, result) => {
+
+  const sql = `SELECT * FROM documents WHERE id = "${id}"`;
+  db.query(sql, (err, result) => {
     if (err) {
       console.log(err);
     }
-    res.send(result);
+    res.json({ result });
   });
 });
 
-// create a document
-router.post("/create", function (req, res) {
+//update a document
+
+router.post("/:id", function (req, res) {
   const title = req.body.title;
   const date = req.body.date;
   const content = req.body.content;
+  const id = req.params.id;
 
-  db.query(
-    "INSERT INTO documents (title, content, date) VALUES (?,?,?)",
-    [title, date, content],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log(result);
+  const sql = `UPDATE documents SET title=?, content=?, date=? WHERE id=?`;
+  db.query(sql, [title, content, date, id], (err, result) => {
+    if (err) {
+      console.log(err);
     }
-  );
+    res.json({ message: "sucess" });
+  });
 });
 
-//update a document
+//login on frontend
+router.post("/login", async (req, res) => {
+  if (
+    req.body.username &&
+    req.body.username == "admin" &&
+    req.body.password &&
+    req.body.password == "admin"
+  ) {
+    res.json({ message: "sucess" });
+  } else {
+    res.json({ mesage: "invalid" });
+  }
+});
+
 module.exports = router;
