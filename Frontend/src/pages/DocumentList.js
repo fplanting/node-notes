@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import AuthService from "../services/auth.service";
-//import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function DocumentList() {
   const [documentList, setDocumentList] = useState([]);
-  //let history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     AuthService.getDocuments().then((response) => {
-      let data = response.data.data;
-      setDocumentList(data.data);
+      console.log(response);
+      let data = response.data;
+      setDocumentList(data);
     });
   }, []);
 
@@ -22,7 +23,7 @@ export default function DocumentList() {
               className="documents"
               key={key}
               onClick={() => {
-                // history.push(`/document/${val.id}`);
+                navigate(`/view/${val.id}`);
               }}
             >
               <h3>{val.title}</h3>

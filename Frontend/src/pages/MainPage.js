@@ -1,6 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, Redirect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function MainPage() {
+export default function MainPage(props) {
+  console.log(props);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -8,6 +10,7 @@ export default function MainPage() {
   const [password, setPassword] = useState("");
   const [errMsg, seterrMsg] = useState("");
   const [sucess, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     userRef.current.focus();
@@ -18,18 +21,36 @@ export default function MainPage() {
   }, [username, password]);
 
   const handleSubmit = async (e) => {
+    console.log("hejhej");
     e.preventDefault();
-    setUsername("");
-    setPassword("");
-    setSuccess(true);
+    fetch("http://localhost:3000/documents/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === "sucess") {
+          setUsername("");
+          setPassword("");
+          setSuccess(true);
+          navigate("/documents");
+          console.log("true");
+          props.setLogin(true);
+        } else {
+          seterrMsg("invalid password");
+          console.log("false");
+        }
+      });
   };
-
-  const login = () => {};
 
   return (
     <>
       {sucess ? (
-        <h1>You are logged in</h1>
+        <p>hej</p>
       ) : (
         <div className="createDocument">
           <div className="uploadDocument">
@@ -60,7 +81,7 @@ export default function MainPage() {
                 value={password}
                 required
               />
-              <button onClick={login}>Login</button>
+              <button type="submit">Login</button>
             </form>
           </div>
         </div>

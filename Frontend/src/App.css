@@ -109,6 +109,7 @@ button {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-top: 200px;
   height: 100vh;
   width: 50%;
   background-color: #b9b8b8;

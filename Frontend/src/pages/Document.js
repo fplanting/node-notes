@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import AuthService from "../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 export default function Document() {
+  const navigate = useNavigate();
   let { id } = useParams();
 
   const [document, setDocument] = useState({});
 
-  //fix this (${id})
   useEffect(() => {
-    AuthService.getOneDocument().then((response) => {
-      let data = response.data.data;
-      setDocument(
-        { title: data.data[0].title },
-        { date: data.data[0].date },
-        { content: data.data[0].content }
-      );
+    AuthService.getOneDocument(id).then((response) => {
+      let data = response.data.result;
+      console.log(response);
+      setDocument({
+        id: data[0].id,
+        title: data[0].title,
+        date: data[0].date,
+        content: data[0].content,
+      });
     });
   }, []);
 
@@ -26,7 +29,13 @@ export default function Document() {
           <h1>{document.title}</h1>
           <h3>{document.date}</h3>
           <p>{document.content}</p>
-          <button>Make a change</button>
+          <button
+            onClick={() => {
+              navigate(`/edit/${document.id}`);
+            }}
+          >
+            Make a change
+          </button>
         </div>
       </div>
     </div>
