@@ -34,6 +34,7 @@ router.post("/create", function (req, res, next) {
     const date = req.body.date;
     const content = req.body.content;
     const sql = `INSERT INTO documents (title, content, date) VALUES (?,?,?)`;
+
     db.query(sql, [title, content, date], (err, result) => {
       if (err) {
         console.log(err);
@@ -41,7 +42,7 @@ router.post("/create", function (req, res, next) {
       console.log("result", result);
     });
   });
-  res.json({ message: "sucess" });
+  res.json({ message: "success" });
 });
 
 //get just one document
@@ -70,7 +71,7 @@ router.post("/:id", function (req, res) {
     if (err) {
       console.log(err);
     }
-    res.json({ message: "sucess" });
+    res.json({ message: "success" });
   });
 });
 
@@ -82,7 +83,7 @@ router.post("/login", async (req, res) => {
     req.body.password &&
     req.body.password == "admin"
   ) {
-    res.json({ message: "sucess" });
+    res.json({ message: "success" });
   } else {
     res.json({ mesage: "invalid" });
   }
