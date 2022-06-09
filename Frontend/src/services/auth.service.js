@@ -20,19 +20,20 @@ const getDocuments = () => {
   return axios.get(API_URL);
 };
 
-// update document
-// const updateDocument = (subscription) => {
-//   console.log("subscription", subscription);
-//   let user = JSON.parse(localStorage.getItem("user"));
-//   return axios.post(API_URL + user.id, {
-//     subscription,
-//   });
-// };
+//update document
+const updateDocument = (id, title, date, content) => {
+  return axios.post(API_URL + id, {
+    title,
+    date,
+    content,
+  });
+};
 
 const AuthService = {
   createDocument,
   getDocuments,
   getOneDocument,
+  updateDocument,
 };
 
 export default AuthService;

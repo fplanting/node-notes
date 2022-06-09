@@ -26,15 +26,15 @@ export default function Document() {
     <div className="showDocument">
       <div className="documentContainer">
         <div className="document">
-          <h1>{document.title}</h1>
-          <h3>{document.date}</h3>
+          <h1>Title: {document.title}</h1>
+          <h3>Date: {document.date}</h3>
           <p>{document.content}</p>
           <button
             onClick={() => {
               navigate(`/edit/${document.id}`);
             }}
           >
-            Make a change
+            Edit
           </button>
         </div>
       </div>

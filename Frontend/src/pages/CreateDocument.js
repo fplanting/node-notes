@@ -1,85 +1,75 @@
 import React, { useEffect, useState, useRef } from "react";
+// import 'dotenv/config'
 import "../App.css";
 import AuthService from "../services/auth.service";
 import { Editor } from "@tinymce/tinymce-react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateDocument() {
-  // const [title, setTitle] = useState("");
-  // const [date, setDate] = useState(""); //ev fixa om för date här
-  // const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [submit, setSubmit] = useState("");
+  const [date, setDate] = useState("");
+  const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
-  // const submitDocument = () => {};
+  const apiKey = "zbyj60s9f3shdgj3a333sfoxysqlskwmxavv80ucvmdv1nam";
+
+  const submitDocument = (e) => {
+    e.preventDefault();
+    AuthService.createDocument(title, date, content).then(() => (response) => {
+      navigate("/documents");
+    });
+  };
 
   //to see in editing or not
   //   <Editor
   //   disabled={true}
   // />
 
-  //put in the values
-  const [initialValue, setInitialValue] = useState(undefined);
-  useEffect(() => {
-    // a real application might do a fetch request here to get the content
-    setTimeout(() => setInitialValue("<p>Once upon a time...</p>"), 500);
-  }, []);
-
-  const editorRef = useRef(null);
-
-  // change here to update the document
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
-
   return (
     <>
-      <Editor
-        apiKey="zbyj60s9f3shdgj3a333sfoxysqlskwmxavv80ucvmdv1nam"
-        onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue={initialValue}
-        init={{
-          height: 500,
-          menubar: false,
-          plugins: [
-            "advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table paste code help wordcount",
-          ],
-          toolbar:
-            "undo redo | formatselect | " +
-            "bold italic backcolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
-            "removeformat | help",
-          content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-        }}
-      />
-      <button onClick={log}>Log editor content</button>
+      <div className="createDocument">
+        <form onSubmit={submitDocument}>
+          <input
+            type="text"
+            placeholder="title"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+          <input
+            type="date"
+            onChange={(e) => {
+              setDate(e.target.value);
+            }}
+          />
+          <Editor
+            apiKey={apiKey}
+            textareaName="content"
+            initialValue="write your text here..."
+            onChange={(newText) => {
+              setContent(newText);
+            }}
+            init={{
+              height: 500,
+              menubar: false,
+              plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table paste code help wordcount",
+              ],
+              toolbar:
+                "undo redo | formatselect | " +
+                "bold italic backcolor | alignleft aligncenter " +
+                "alignright alignjustify | bullist numlist outdent indent | " +
+                "removeformat | help",
+              content_style:
+                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+            }}
+          />
+          <button type="submit">Save</button>
+        </form>
+      </div>
     </>
-    // <div className="createDocument">
-    //   <div className="uploadDocument">
-    //     <label>Title</label>
-    //     <input
-    //       type="text"
-    //       onChange={(e) => {
-    //         setTitle(e.target.value);
-    //       }}
-    //     />
-    //     <label>Date</label>
-    //     <input
-    //       type="date"
-    //       onChange={(e) => {
-    //         setDate(e.target.value);
-    //       }}
-    //     />
-    //     <label>Content</label>
-    //     <textarea
-    //       onChange={(e) => {
-    //         setContent(e.target.value);
-    //       }}
-    //     />
-    //     <button onClick={submitDocument}>Submit Document</button>
-    //   </div>
-    // </div>
   );
 }

@@ -17,6 +17,7 @@ export default function DocumentList() {
   return (
     <div className="showDocuments">
       <div className="docContainer">
+        <h1>Documents</h1>
         {documentList.map((val, key) => {
           return (
             <div
@@ -26,9 +27,9 @@ export default function DocumentList() {
                 navigate(`/view/${val.id}`);
               }}
             >
-              <h3>{val.title}</h3>
-              <p>{val.date}</p>
-              <button>Click here to see more..</button>
+              <h3>Title: {val.title}</h3>
+              <p>Date: {val.date}</p>
+              <button className="docBtn">See more...</button>
             </div>
           );
         })}
