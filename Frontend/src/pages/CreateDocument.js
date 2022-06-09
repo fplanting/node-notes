@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-// import 'dotenv/config'
 import "../App.css";
 import AuthService from "../services/auth.service";
 import { Editor } from "@tinymce/tinymce-react";
@@ -7,24 +6,22 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateDocument() {
   const [title, setTitle] = useState("");
-  const [submit, setSubmit] = useState("");
   const [date, setDate] = useState("");
-  const [content, setContent] = useState("");
   const navigate = useNavigate();
+  const editorRef = useRef(null);
 
-  const apiKey = "zbyj60s9f3shdgj3a333sfoxysqlskwmxavv80ucvmdv1nam";
+  const apiKey = process.env.REACT_APP_SECRET_KEY;
 
-  const submitDocument = (e) => {
+  const submitDocument = async (e) => {
     e.preventDefault();
-    AuthService.createDocument(title, date, content).then(() => (response) => {
-      navigate("/documents");
-    });
+    if (editorRef.current) {
+      let content = editorRef.current.getContent();
+      let response = await AuthService.createDocument(title, date, content);
+      if (response.data.message === "success") {
+        navigate("/documents");
+      }
+    }
   };
-
-  //to see in editing or not
-  //   <Editor
-  //   disabled={true}
-  // />
 
   return (
     <>
@@ -47,24 +44,10 @@ export default function CreateDocument() {
             apiKey={apiKey}
             textareaName="content"
             initialValue="write your text here..."
-            onChange={(newText) => {
-              setContent(newText);
-            }}
+            onInit={(evt, editor) => (editorRef.current = editor)}
             init={{
               height: 500,
               menubar: false,
-              plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table paste code help wordcount",
-              ],
-              toolbar:
-                "undo redo | formatselect | " +
-                "bold italic backcolor | alignleft aligncenter " +
-                "alignright alignjustify | bullist numlist outdent indent | " +
-                "removeformat | help",
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             }}
           />
           <button type="submit">Save</button>

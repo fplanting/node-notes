@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect, Redirect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useLogin } from "../services/login.provider";
 
-export default function MainPage(props) {
-  console.log(props);
+export default function MainPage() {
   const userRef = useRef();
   const errRef = useRef();
 
@@ -11,17 +11,13 @@ export default function MainPage(props) {
   const [errMsg, seterrMsg] = useState("");
   const [sucess, setSuccess] = useState("");
   const navigate = useNavigate();
+  const { user, login } = useLogin();
 
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
-
-  useEffect(() => {
-    seterrMsg("");
-  }, [username, password]);
+  if (user) {
+    return <Navigate to="/documents" />;
+  }
 
   const handleSubmit = async (e) => {
-    console.log("hejhej");
     e.preventDefault();
     fetch("http://localhost:3000/documents/login", {
       method: "POST",
@@ -33,16 +29,14 @@ export default function MainPage(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message === "sucess") {
+        if (data.message === "success") {
+          login({ username });
           setUsername("");
           setPassword("");
           setSuccess(true);
           navigate("/documents");
-          console.log("true");
-          props.setLogin(true);
         } else {
           seterrMsg("invalid password");
-          console.log("false");
         }
       });
   };

@@ -2,23 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
+import parse from "html-react-parser";
 
 export default function Document() {
   const navigate = useNavigate();
   let { id } = useParams();
-
-  const [document, setDocument] = useState({});
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     AuthService.getOneDocument(id).then((response) => {
       let data = response.data.result;
-      console.log(response);
-      setDocument({
-        id: data[0].id,
-        title: data[0].title,
-        date: data[0].date,
-        content: data[0].content,
-      });
+      setTitle(data[0].title);
+      setDate(data[0].date);
+      setContent(data[0].content);
     });
   }, []);
 
@@ -26,12 +24,12 @@ export default function Document() {
     <div className="showDocument">
       <div className="documentContainer">
         <div className="document">
-          <h1>Title: {document.title}</h1>
-          <h3>Date: {document.date}</h3>
-          <p>{document.content}</p>
+          <h1>Title: {title}</h1>
+          <h3>Date: {date}</h3>
+          <div>{parse(content)}</div>
           <button
             onClick={() => {
-              navigate(`/edit/${document.id}`);
+              navigate(`/edit/${id}`);
             }}
           >
             Edit

@@ -8,7 +8,6 @@ export default function DocumentList() {
 
   useEffect(() => {
     AuthService.getDocuments().then((response) => {
-      console.log(response);
       let data = response.data;
       setDocumentList(data);
     });
