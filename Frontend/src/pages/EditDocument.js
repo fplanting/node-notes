@@ -3,7 +3,6 @@ import "../App.css";
 import AuthService from "../services/auth.service";
 import { Editor } from "@tinymce/tinymce-react";
 import { useNavigate, useParams } from "react-router-dom";
-import dayjs from "dayjs";
 
 export default function EditDocument() {
   const [title, setTitle] = useState("");
@@ -18,11 +17,7 @@ export default function EditDocument() {
   useEffect(() => {
     AuthService.getOneDocument(id).then((response) => {
       let data = response.data.result;
-      let date = dayjs(data[0].date);
-      console.log(data[0].date);
-      console.log(date);
-
-      setDate(date.format("YYYY-MM-DD"));
+      setDate(data[0].date);
       setTitle(data[0].title);
       setContent(data[0].content);
       if (editorRef.current) {

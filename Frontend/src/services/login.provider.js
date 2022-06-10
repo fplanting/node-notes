@@ -38,17 +38,10 @@ export const LoginProvider = ({ children }) => {
     navigate("/documents");
   };
 
-  // call this function to sign out logged in user
-  const logout = () => {
-    setUser(null);
-    navigate("/", { replace: true });
-  };
-
   const value = useMemo(
     () => ({
       user,
       login,
-      logout,
     }),
     [user]
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "../App.css";
 import AuthService from "../services/auth.service";
 import { Editor } from "@tinymce/tinymce-react";
