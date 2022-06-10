@@ -26,8 +26,8 @@ export default function DocumentList() {
                 navigate(`/view/${val.id}`);
               }}
             >
-              <h3>Title: {val.title}</h3>
-              <p>Date: {val.date}</p>
+              <h3>{val.title}</h3>
+              <p>{val.date}</p>
               <button className="docBtn">See more...</button>
             </div>
           );
