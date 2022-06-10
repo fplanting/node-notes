@@ -7,12 +7,12 @@ A Admin login, seeing documents, editing documents and creating new documents.
 # Getting started
 
 For database, create table "documents" with this structure:
-```
-id
-title
-date
-content
-```
+| Name  | Type |
+| ------------- | ------------- |
+| Id | int(11)  |
+| title  | varchar(50)  |
+| content | text  |
+| date  |  date |
 
 ## Installation backend
 
