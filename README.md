@@ -1,10 +1,10 @@
 # About
 
 School project.\
-A backend and frontend demo for storing documents in mysql database with a tinymc-editing.\
+A backend and frontend page for storing documents in mysql database with a tinymc-editing.\
 A Admin login, seeing documents, editing documents and creating new documents.
 
-## Getting started
+# Getting started
 
 ## Installation backend
 
@@ -21,6 +21,7 @@ const db = mysql.createConnection({
   port: "",
   database: "",
   password: "",
+  dateStrings: true,
 });
 
 db.connect(function (err) {
@@ -32,7 +33,7 @@ module.exports = db;
 
 ```
 
-## Run backend
+### Run backend
 
 After installation you can get started by running `npm start`.\
 Once started open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -45,11 +46,17 @@ mysql2 \
 nodemon \
 cors \
 
-# Getting started frontend
 
 ## Installation frontend
 
-First time installation requires you to run `npm install`.
+First time installation requires you to run `npm install` and afterwards create a .env file with a key string which you get access to from [https://www.tiny.cloud/] (https://www.tiny.cloud/), by creating a user.
+
+The .env file should contain as below:
+
+```
+REACT_APP_SECRET_KEY="key-string"
+```
+
 
 ## Run frontend
 
@@ -61,5 +68,6 @@ Once started open [http://localhost:3006](http://localhost:3006) to view it in y
 
 react \
 axios \
-tinymc-react
+tinymc-react \
+html-react-parser
 
