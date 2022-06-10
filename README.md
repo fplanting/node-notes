@@ -4,6 +4,8 @@ School project.\
 A backend and frontend page for storing documents in mysql database with a tinymc-editing.\
 A Admin login, seeing documents, editing documents and creating new documents.
 
+# Getting started
+
 For database, create table "documents" with this structure:
 ```
 id
@@ -11,8 +13,6 @@ title
 date
 content
 ```
-
-# Getting started
 
 ## Installation backend
 
