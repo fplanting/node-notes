@@ -68,6 +68,6 @@ Once started open [http://localhost:3006](http://localhost:3006) to view it in y
 
 react \
 axios \
-tinymc-react \
+tinymce-react \
 html-react-parser
 
