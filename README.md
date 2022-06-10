@@ -8,7 +8,7 @@ A Admin login, seeing documents, editing documents and creating new documents.
 
 ## Installation backend
 
-First time installation requires you to run `npm install` and afterwards create a db.js file with required mysql credentials.
+First time installation requires you to run `npm install` and afterwards create a map called config in root with a db.js file with required mysql credentials.
 
 The db.js should contain the environments variables described below:
 
